@@ -1,0 +1,41 @@
+worker_id,name,department,salary,performance_rating
+201,Worker_201,Warehouse,4873,3.83
+202,Worker_202,Product Dev,5361,4.95
+203,Worker_203,Product Dev,3363,3.89
+204,Worker_204,Warehouse,6243,3.2
+205,Worker_205,Warehouse,3467,4.98
+206,Worker_206,Marketing,5684,3.8
+207,Worker_207,Marketing,5548,3.72
+208,Worker_208,Product Dev,5972,4.99
+209,Worker_209,Marketing,6553,3.67
+210,Worker_210,Technician,6780,4.96
+211,Worker_211,Technician,4713,3.14
+212,Worker_212,Marketing,3802,4.2
+213,Worker_213,Product Dev,5795,3.45
+214,Worker_214,Product Dev,3208,3.1
+215,Worker_215,Warehouse,6579,3.5
+216,Worker_216,Warehouse,2593,3.07
+217,Worker_217,Manufacturing,4888,3.97
+218,Worker_218,Technician,5366,3.05
+219,Worker_219,Marketing,5847,4.74
+220,Worker_220,Warehouse,6404,3.98
+221,Worker_221,Manufacturing,4378,3.01
+222,Worker_222,Marketing,6051,4.25
+223,Worker_223,Product Dev,3557,4.39
+224,Worker_224,Manufacturing,3111,3.77
+225,Worker_225,Technician,5785,3.9
+226,Worker_226,Manufacturing,5776,3.27
+227,Worker_227,Manufacturing,4269,3.1
+228,Worker_228,Manufacturing,4287,4.2
+229,Worker_229,Marketing,3337,4.5
+230,Worker_230,Marketing,4375,4.66
+231,Worker_231,Technician,5070,4.61
+232,Worker_232,Product Dev,3461,3.77
+233,Worker_233,Manufacturing,3352,4.35
+234,Worker_234,Marketing,4230,3.94
+235,Worker_235,Warehouse,6215,3.97
+236,Worker_236,Product Dev,6667,4.7
+237,Worker_237,Manufacturing,6833,3.27
+238,Worker_238,Product Dev,3615,4.2
+239,Worker_239,Technician,3919,3.73
+240,Worker_240,Technician,2896,4.39

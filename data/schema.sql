@@ -12,7 +12,7 @@ CREATE TABLE customers(
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     phone TEXT
-    region
+    region TEXT NOT NULL,
 );
 
 CREATE TABLE sales(
@@ -39,5 +39,14 @@ CREATE TABLE inventory(
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
     last_updated DATE NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+)
+
+CREATE TABEL materials(
+    material_id INTEGER PRIMARY KEY,
+    product_id INTEGER NOT NULL,
+    material_name TEXT NOT NULL,
+    material_type TEXT NOT NULL,
+    mass FLOAT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 )

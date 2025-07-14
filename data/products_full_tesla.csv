@@ -1,0 +1,41 @@
+product_id,name,category,price,stock,supplier
+100,Tesla Model S,EV Car,62745,472,Tesla Inc.
+101,Tesla Model 3,EV Car,2759,167,Tesla Inc.
+102,Tesla Model X,EV Car,56715,130,Tesla Inc.
+103,Tesla Model Y,EV Car,59414,249,Tesla Inc.
+104,Tesla Semi,EV Truck,41767,84,Tesla Inc.
+105,Tesla Cybertruck,EV Truck,65922,202,Tesla Inc.
+106,Tesla Roadster,Sports Car,7075,265,Tesla Inc.
+107,Tesla Powerwall,Energy Storage,73964,388,Tesla Inc.
+108,Tesla Solar Roof,Energy Product,22652,127,Tesla Inc.
+109,Tesla Megapack,Energy Storage,68574,373,Tesla Inc.
+110,Tesla Supercharger V3,Charging Infra,57134,145,Tesla Inc.
+111,Tesla Autopilot HW4,Software Hardware,62289,457,Tesla Inc.
+112,Tesla FSD Chip,Software Hardware,85166,144,Tesla Inc.
+113,Tesla Battery Module 4680,Component,80765,440,Tesla Inc.
+114,Tesla HVAC,Component,46748,381,Tesla Inc.
+115,Tesla Infotainment Computer,Component,31478,497,Tesla Inc.
+116,Tesla Heat Pump,Component,13839,439,Tesla Inc.
+117,Tesla Rear Drive Unit,Component,46552,96,Tesla Inc.
+118,Tesla Front Drive Unit,Component,66608,381,Tesla Inc.
+119,Tesla Plaid Motor,Component,73079,352,Tesla Inc.
+120,Tesla Glass Roof,Component,8785,345,Tesla Inc.
+121,Tesla Steering Yoke,Component,88048,45,Tesla Inc.
+122,Tesla CCS Adapter,Accessory,3129,55,Tesla Inc.
+123,Tesla Wall Connector,Charging Infra,64075,190,Tesla Inc.
+124,Tesla Mobile Connector,Accessory,17964,231,Tesla Inc.
+125,Tesla Aero Wheels,Wheel,84903,369,Tesla Inc.
+126,Tesla Performance Wheels,Wheel,34875,426,Tesla Inc.
+127,Tesla Wireless Charger,Accessory,44255,182,Tesla Inc.
+128,Tesla Model S Seats,Interior,21664,187,Tesla Inc.
+129,Tesla Model 3 Seats,Interior,21705,455,Tesla Inc.
+130,Tesla Window Regulator,Component,86787,198,Tesla Inc.
+131,Tesla Door Handle Assembly,Component,56772,256,Tesla Inc.
+132,Tesla Drive Inverter,Component,3512,304,Tesla Inc.
+133,Tesla AC Compressor,Component,69347,54,Tesla Inc.
+134,Tesla Rear View Camera,Component,59832,466,Tesla Inc.
+135,Tesla Ultrasonic Sensors,Sensor,10073,242,Tesla Inc.
+136,Tesla Radar Sensor,Sensor,45212,124,Tesla Inc.
+137,Tesla LiDAR Test Unit,Sensor,48995,343,Tesla Inc.
+138,Tesla ECU,Component,21262,388,Tesla Inc.
+139,Tesla Door Trim,Interior,67366,473,Tesla Inc.

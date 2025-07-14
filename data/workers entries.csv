@@ -39,3 +39,5 @@ worker_id,name,department,salary,performance_rating
 238,Worker_238,Product Dev,3615,4.2
 239,Worker_239,Technician,3919,3.73
 240,Worker_240,Technician,2896,4.39
+241,Worker_241,Product Manager,10000,4.90
+242,Worker_242,Product Engineer,12000,4.50

@@ -1,0 +1,23 @@
+bom_id,product_id,name,material_name,material_type,quantity_required_per_unit,scrap_rate_percent
+200,101,Tesla Model S,aluminium,Raw Material,900,6.0
+201,101,Tesla Model S,battery module 18650,Component,16,1.0
+202,101,Tesla Model S,motors,Component,2,0.5
+203,101,Tesla Model S,infotainment computer,Component,1,0.2
+204,102,Tesla Model 3,aluminium,Raw Material,600,5.0
+205,102,Tesla Model 3,battery module 2170,Component,4,1.0
+206,102,Tesla Model 3,motors,Component,1,0.5
+207,102,Tesla Model 3,media control unit chip,Component,1,0.3
+208,103,Tesla Model X,aluminium,Raw Material,850,6.0
+209,103,Tesla Model X,battery module 18650,Component,16,1.0
+210,103,Tesla Model X,motors,Component,2,0.5
+211,103,Tesla Model X,autopilot processor,Component,1,0.2
+212,104,Tesla Model Y,aluminium,Raw Material,700,5.0
+213,104,Tesla Model Y,battery module 2170,Component,4,1.0
+214,104,Tesla Model Y,motors,Component,1,0.5
+215,104,Tesla Model Y,radar sensor,Component,1,0.1
+216,105,Cybertruck,ultra hard steel,Raw Material,1500,8.0
+217,105,Cybertruck,battery module 4680,Component,8,2.0
+218,105,Cybertruck,motors,Component,3,0.5
+219,105,Cybertruck,autopilot processor,Component,1,0.2
+220,106,Tesla Powerwall,lithium,Raw Material,50,3.0
+221,106,Tesla Powerwall,battery pack,Component,1,1.0

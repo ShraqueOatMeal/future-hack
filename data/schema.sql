@@ -40,13 +40,30 @@ CREATE TABLE inventory(
     quantity INTEGER NOT NULL,
     last_updated DATE NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
-)
+);
 
-CREATE TABEL materials(
+CREATE TABLE materials(
     material_id INTEGER PRIMARY KEY,
-    product_id INTEGER NOT NULL,
     material_name TEXT NOT NULL,
     material_type TEXT NOT NULL,
-    mass FLOAT NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
-)
+    quantity INTEGER NOT NULL,
+    unit TEXT NOT NULL,
+    last_updated DATE NOT NULL,
+    FOREIGN KEY (material_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE bom(
+    bom_id INTEGER PRIMARY KEY,
+    product_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    material_name TEXT NOT NULL,
+    material_type TEXT NOT NULL,
+    quantity_required_per_unit FLOAT NOT NULL,
+    scrap_rate_percent FLOAT DEFAULT 0,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (name) REFERENCES products(name),
+    FOREIGN KEY (material_name) REFERENCES materials(material_name),
+    FOREIGN KEY (material_type) REFERENCES materials(material_type)
+);
+
+

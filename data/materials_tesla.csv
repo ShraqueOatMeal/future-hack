@@ -1,41 +1,12 @@
-material_id,product_id,material_name,material_type,mass
-1,100,Rare Earth Elements,Magnets,38.3
-2,101,Rare Earth Elements,Magnets,111.55
-3,102,Glass,Structural,148.26
-4,103,Rare Earth Elements,Magnets,111.55
-5,104,Steel,Chassis,12.46
-6,105,Silicon,Semiconductor,134.19
-7,106,Cobalt,Battery Mineral,106.29
-8,107,Nickel,Battery Mineral,47.31
-9,108,Cobalt,Battery Mineral,98.88
-10,109,Plastic,Housing,137.9
-11,110,Cobalt,Battery Mineral,48.96
-12,111,Glass,Structural,9.67
-13,112,Copper,Electrical,133.1
-14,113,Copper,Electrical,93.75
-15,114,Lithium,Battery Mineral,134.26
-16,115,Silicon,Semiconductor,19.15
-17,116,Cobalt,Battery Mineral,40.12
-18,117,Aluminium,Metal,106.8
-19,118,Plastic,Housing,93.4
-20,119,Copper,Electrical,54.96
-21,120,Copper,Electrical,39.94
-22,121,Aluminium,Metal,122.31
-23,122,Glass,Structural,24.34
-24,123,Silicon,Semiconductor,50.28
-25,124,Plastic,Housing,90.1
-26,125,Copper,Electrical,115.73
-27,126,Silicon,Semiconductor,48.25
-28,127,Cobalt,Battery Mineral,134.55
-29,128,Nickel,Battery Mineral,92.14
-30,129,Nickel,Battery Mineral,69.85
-31,130,Plastic,Housing,26.39
-32,131,Lithium,Battery Mineral,37.2
-33,132,Copper,Electrical,120.59
-34,133,Aluminium,Metal,119.63
-35,134,Steel,Chassis,123.41
-36,135,Plastic,Housing,109.44
-37,136,Copper,Electrical,57.14
-38,137,Silicon,Semiconductor,42.44
-39,138,Plastic,Housing,19.74
-40,139,Copper,Electrical,73.99
+material_id,material_name,material_type,quantity,unit,last_updated
+800,aluminium,Raw Material,25000,kg,2025-07-10
+801,battery module 18650,Component,400,unit,2025-07-10
+802,battery module 2170,Component,350,unit,2025-07-10
+803,battery module 4680,Component,300,unit,2025-07-10
+804,motors,Component,180,unit,2025-07-10
+805,autopilot processor,Component,120,unit,2025-07-10
+806,radar sensor,Component,150,unit,2025-07-10
+807,infotainment computer,Component,140,unit,2025-07-10
+808,ultra hard steel,Raw Material,5000,kg,2025-07-10
+809,lithium,Raw Material,800,kg,2025-07-10
+810,media control unit chip,Component,400,kg,2025-07-10

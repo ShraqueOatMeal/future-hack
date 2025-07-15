@@ -64,13 +64,31 @@ def create_tables():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS materials(
         material_id INTEGER PRIMARY KEY,
-        product_id INTEGER NOT NULL,
         material_name TEXT NOT NULL,
         material_type TEXT NOT NULL,
-        mass FLOAT NOT NULL,
-        FOREIGN KEY (product_id) REFERENCES products(product_id)
+        material_type TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        unit TEXT NOT NULL,
+        last_updated DATE NOT NULL,
+        FOREIGN KEY (material_id) REFERENCES products(product_id)
     );
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS bom(
+        bom_id INTEGER PRIMARY KEY,
+        product_id INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        material_name TEXT NOT NULL,
+        material_type TEXT NOT NULL,
+        quantity_required_per_unit FLOAT NOT NULL,
+        scrap_rate_percent FLOAT DEFAULT 0,
+        FOREIGN KEY (product_id) REFERENCES products(product_id),
+        FOREIGN KEY (name) REFERENCES products(name),
+        FOREIGN KEY (material_name) REFERENCES materials(material_name),
+        FOREIGN KEY (material_type) REFERENCES materials(material_type)
+    );
+    """)
+  
 
     conn.commit()
     conn.close()
@@ -85,6 +103,7 @@ def load_csv_data():
     pd.read_csv("data/workers entries.csv").to_sql("workers", conn, if_exists="replace", index=False)
     pd.read_csv("data/inventory_full_tesla.csv").to_sql("inventory", conn, if_exists="replace", index=False)
     pd.read_csv("data/materials_tesla.csv").to_sql("materials", conn, if_exists="replace", index=False)
+    pd.read_csv("data/bom_tesla.csv").to_sql("bom", conn, if_exists="replace", index=False)
 
     conn.commit()
     conn.close()

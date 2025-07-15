@@ -4,7 +4,8 @@ CREATE TABLE products(
     category TEXT NOT NULL,
     price FLOAT NOT NULL,
     stock INTEGER NOT NULL,
-    supplier TEXT NOT NULL
+    supplier TEXT NOT NULL,
+    tags TEXT
 );
 
 CREATE TABLE customers(
@@ -12,7 +13,7 @@ CREATE TABLE customers(
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     phone TEXT
-    region
+    region TEXT NOT NULL,
 );
 
 CREATE TABLE sales(
@@ -41,3 +42,13 @@ CREATE TABLE inventory(
     last_updated DATE NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 )
+
+CREATE TABLE materials(
+    material_id INTEGER PRIMARY KEY,
+    product_id INTEGER NOT NULL,
+    material_name TEXT NOT NULL,
+    material_type TEXT NOT NULL,
+    mass FLOAT NOT NULL,
+    tags TEXT,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);

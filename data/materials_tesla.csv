@@ -1,41 +1,41 @@
-material_id,product_id,material_name,material_type,mass
-1,100,Rare Earth Elements,Magnets,38.3
-2,101,Rare Earth Elements,Magnets,111.55
-3,102,Glass,Structural,148.26
-4,103,Rare Earth Elements,Magnets,111.55
-5,104,Steel,Chassis,12.46
-6,105,Silicon,Semiconductor,134.19
-7,106,Cobalt,Battery Mineral,106.29
-8,107,Nickel,Battery Mineral,47.31
-9,108,Cobalt,Battery Mineral,98.88
-10,109,Plastic,Housing,137.9
-11,110,Cobalt,Battery Mineral,48.96
-12,111,Glass,Structural,9.67
-13,112,Copper,Electrical,133.1
-14,113,Copper,Electrical,93.75
-15,114,Lithium,Battery Mineral,134.26
-16,115,Silicon,Semiconductor,19.15
-17,116,Cobalt,Battery Mineral,40.12
-18,117,Aluminium,Metal,106.8
-19,118,Plastic,Housing,93.4
-20,119,Copper,Electrical,54.96
-21,120,Copper,Electrical,39.94
-22,121,Aluminium,Metal,122.31
-23,122,Glass,Structural,24.34
-24,123,Silicon,Semiconductor,50.28
-25,124,Plastic,Housing,90.1
-26,125,Copper,Electrical,115.73
-27,126,Silicon,Semiconductor,48.25
-28,127,Cobalt,Battery Mineral,134.55
-29,128,Nickel,Battery Mineral,92.14
-30,129,Nickel,Battery Mineral,69.85
-31,130,Plastic,Housing,26.39
-32,131,Lithium,Battery Mineral,37.2
-33,132,Copper,Electrical,120.59
-34,133,Aluminium,Metal,119.63
-35,134,Steel,Chassis,123.41
-36,135,Plastic,Housing,109.44
-37,136,Copper,Electrical,57.14
-38,137,Silicon,Semiconductor,42.44
-39,138,Plastic,Housing,19.74
-40,139,Copper,Electrical,73.99
+material_id,product_id,material_name,material_type,mass,tags
+1,100,Rare Earth Elements,Magnets,38.3,"magnet,material"
+2,101,Rare Earth Elements,Magnets,111.55,"magnet,material"
+3,102,Glass,Structural,148.26,"glass,structural,material"
+4,103,Rare Earth Elements,Magnets,111.55,"magnet,material"
+5,104,Steel,Chassis,12.46,"steel,chassis,material"
+6,105,Silicon,Semiconductor,134.19,"semiconductor,material"
+7,106,Cobalt,Battery Mineral,106.29,"battery,material,cobalt"
+8,107,Nickel,Battery Mineral,47.31,"battery,material,nickel"
+9,108,Cobalt,Battery Mineral,98.88,"battery,material,cobalt"
+10,109,Plastic,Housing,137.9,"housing,material,plastic"
+11,110,Cobalt,Battery Mineral,48.96,"battery,material,cobalt"
+12,111,Glass,Structural,9.67,"glass,structural,material"
+13,112,Copper,Electrical,133.1,"copper,material,electrical"
+14,113,Copper,Electrical,93.75,"copper,material,electrical"
+15,114,Lithium,Battery Mineral,134.26,"battery,material,lithium"
+16,115,Silicon,Semiconductor,19.15,"semiconductor,material"
+17,116,Cobalt,Battery Mineral,40.12,"battery,material,cobalt"
+18,117,Aluminium,Metal,106.8,"aluminium,material,metal"
+19,118,Plastic,Housing,93.4,"housing,material,plastic"
+20,119,Copper,Electrical,54.96,"copper,material,electrical"
+21,120,Copper,Electrical,39.94,"copper,material,electrical"
+22,121,Aluminium,Metal,122.31,"aluminium,material,metal"
+23,122,Glass,Structural,24.34,"glass,structural,material"
+24,123,Silicon,Semiconductor,50.28,"semiconductor,material"
+25,124,Plastic,Housing,90.1,"housing,material,plastic"
+26,125,Copper,Electrical,115.73,"copper,material,electrical"
+27,126,Silicon,Semiconductor,48.25,"semiconductor,material"
+28,127,Cobalt,Battery Mineral,134.55,"battery,material,cobalt"
+29,128,Nickel,Battery Mineral,92.14,"battery,material,nickel"
+30,129,Nickel,Battery Mineral,69.85,"battery,material,nickel"
+31,130,Plastic,Housing,26.39,"housing,material,plastic"
+32,131,Lithium,Battery Mineral,37.2,"battery,material,lithium"
+33,132,Copper,Electrical,120.59,"copper,material,electrical"
+34,133,Aluminium,Metal,119.63,"aluminium,material,metal"
+35,134,Steel,Chassis,123.41,"steel,chassis,material"
+36,135,Plastic,Housing,109.44,"housing,material,plastic"
+37,136,Copper,Electrical,57.14,"copper,material,electrical"
+38,137,Silicon,Semiconductor,42.44,"semiconductor,material"
+39,138,Plastic,Housing,19.74,"housing,material,plastic"
+40,139,Copper,Electrical,73.99,"copper,material,electrical"

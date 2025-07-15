@@ -14,7 +14,8 @@ def create_tables():
         category TEXT NOT NULL,
         price FLOAT NOT NULL,
         stock INTEGER NOT NULL,
-        supplier TEXT NOT NULL
+        supplier TEXT NOT NULL,
+        tags TEXT  -- Comma-separated descriptive keywords
     );
     """)
 
@@ -68,6 +69,7 @@ def create_tables():
         material_name TEXT NOT NULL,
         material_type TEXT NOT NULL,
         mass FLOAT NOT NULL,
+        tags TEXT,  -- Comma-separated descriptive keywords
         FOREIGN KEY (product_id) REFERENCES products(product_id)
     );
     """)
@@ -90,7 +92,7 @@ def load_csv_data():
     conn.close()
     print("Data loaded into the database successfully.")
 
-# ------------------------ #
+# ------------------------
 # Functions for NLP Queries (basic ones)
 
 def fetch_table(table_name):
@@ -136,4 +138,3 @@ if __name__ == "__main__":
     create_tables()
     load_csv_data()
     print("Database setup complete. You can now use the database for your queries.")
-   

@@ -3,10 +3,13 @@ import requests
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 TWELVE_DATA_API_KEY = os.getenv("TWELVE_DATA_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_API_URL = "https://api.groq.com/openai/v1"
+MODEL = "grok-3"  # Updated to Grok 3
 
 
 def fetch_latest_stock_data(symbol="NVDA", interval="1day", points=12):

@@ -1,32 +1,27 @@
-import sqlite3
-import requests
 import os
-import re
+import sqlite3
 import pandas as pd
 from dotenv import load_dotenv
+import re
 from typing import Dict, List, Tuple
 import logging
+from openai import OpenAI  # Import OpenAI SDK
 
-# Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+XAI_API_KEY = os.getenv("XAI_API_KEY")  # Use XAI_API_KEY
+if not XAI_API_KEY:
+    raise ValueError("XAI_API_KEY not found")
+GROQ_API_URL = "https://api.x.ai/v1"  # Update to match test script
+MODEL = "grok-3"  # Update to match test script
 DB_PATH = "company.db"
+
+client = OpenAI(api_key=XAI_API_KEY, base_url=GROQ_API_URL)
 
 # Cache for schema to avoid repeated queries
 _schema_cache: Dict[str, str] = {}
-
-# Common SQL keywords to exclude from column validation
-SQL_KEYWORDS = {
-    'SELECT', 'FROM', 'JOIN', 'ON', 'WHERE', 'GROUP', 'BY', 'HAVING', 'ORDER', 'LIMIT',
-    'LIKE', 'AS', 'AND', 'OR', 'NOT', 'IN', 'BETWEEN', 'SUM', 'COUNT', 'MIN', 'MAX',
-    'AVG', 'DATE', 'LOWER', 'UPPER', 'WITH'
-}
 
 def generate_dynamic_schema(db_path: str = DB_PATH) -> str:
     """
@@ -329,17 +324,14 @@ def enforce_column_qualification(sql: str, schema: str) -> str:
     sql = re.sub(r'\b(\w+\.)?(\w+)\b(?!\s*\()', replace_column, sql)
     return sql
 
+
+
 def text_to_sql(nl_query: str, db_path: str = DB_PATH) -> str:
     """
-    Uses Groq API to convert a natural language query to SQL, using a dynamically generated schema.
+    Uses Groq API with OpenAI SDK to convert a natural language query to SQL, using a dynamically generated schema.
     """
     schema = generate_dynamic_schema(db_path)
     
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
-
     system_prompt = f"""
 You are a SQL generation engine for an internal SQLite business database. Generate precise SQL SELECT queries to answer questions about internal company data based on the provided schema. For production capacity or bottleneck queries, calculate maximum units based on component availability and identify limiting factors.
 
@@ -399,26 +391,42 @@ CRITICAL: Return only the SQL query, nothing else!
 
     user_prompt = f"Generate SQL for the internal database part of this query: {nl_query}"
 
-    data = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        "temperature": 0.1
-    }
-
     try:
-        response = requests.post(GROQ_API_URL, headers=headers, json=data)
-        response.raise_for_status()
-        result = response.json()
-        raw_sql = result["choices"][0]["message"]["content"]
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.1
+        )
+        raw_sql = response.choices[0].message.content
         logger.info(f"Raw SQL from Groq: {raw_sql}")
         return raw_sql
     except Exception as e:
         logger.error(f"Error in text_to_sql: {e}")
-        logger.error(f"Full response: {result if 'result' in locals() else 'No response'}")
         return "SELECT 'Invalid query' as error_message;"
+    
+# def text_to_sql(nl_query: str, db_path: str = DB_PATH) -> str:
+    schema = generate_dynamic_schema(db_path)
+    system_prompt = "..."  # Your existing prompt
+    user_prompt = f"Generate SQL for the internal database part of this query: {nl_query}"
+    try:
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.1
+        )
+        raw_sql = response.choices[0].message.content
+        logger.info(f"Raw SQL from Groq: {raw_sql}")
+        return raw_sql
+    except Exception as e:
+        logger.error(f"Error in text_to_sql: {e}")
+        return "SELECT 'Invalid query' as error_message;"
+    
 
 def run_nl_query(nl_query: str, db_path: str = DB_PATH):
     """

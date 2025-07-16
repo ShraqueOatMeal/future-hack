@@ -304,19 +304,6 @@ def route_query_json(user_query):
 
 # Enhanced CLI interface
 if __name__ == "__main__":
-    print("\n🚀 AI ASSISTANT BUSINESS INTELLIGENCE SYSTEM")
-    print("=" * 50)
-    print("Features:")
-    print("✅ Intelligent query routing")
-    print("✅ Enhanced security validation")
-    print("✅ Structured JSON responses")
-    print("✅ Executive dashboards")
-    print("✅ Real-time KPIs")
-    print("✅ Actionable recommendations")
-    print("\nQuery Examples:")
-    print("Simple: 'Show me top 5 products'")
-    print("Complex: 'What should we invest in to improve profitability?'")
-    print("=" * 50)
     
     router = UnifiedBusinessRouter()
     

@@ -21,6 +21,13 @@ DB_PATH = "company.db"
 # Cache for schema to avoid repeated queries
 _schema_cache: Dict[str, str] = {}
 
+# Common SQL keywords to exclude from column validation
+SQL_KEYWORDS = {
+    'SELECT', 'FROM', 'JOIN', 'ON', 'WHERE', 'GROUP', 'BY', 'HAVING', 'ORDER', 'LIMIT',
+    'LIKE', 'AS', 'AND', 'OR', 'NOT', 'IN', 'BETWEEN', 'SUM', 'COUNT', 'MIN', 'MAX',
+    'AVG', 'DATE', 'LOWER', 'UPPER', 'WITH'
+}
+
 def generate_dynamic_schema(db_path: str = DB_PATH) -> str:
     """
     Query the database to generate a dynamic schema description.
@@ -143,13 +150,20 @@ def extract_cte_columns(sql: str, cte_aliases: set) -> Dict[str, List[str]]:
                                 cte_columns[cte_name].append(token)
     return cte_columns
 
-def validate_columns(sql, schema_tables, cte_columns):
+
+SQL_KEYWORDS = {
+    'SELECT', 'FROM', 'JOIN', 'ON', 'WHERE', 'GROUP', 'BY', 'HAVING', 'ORDER', 'LIMIT',
+    'LIKE', 'AS', 'AND', 'OR', 'NOT', 'IN', 'BETWEEN', 'SUM', 'COUNT', 'MIN', 'MAX',
+    'AVG', 'DATE', 'LOWER', 'UPPER', 'WITH', 'ASC', 'DESC'
+}
+
+def validate_columns(sql: str, schema: str, cte_columns: Dict[str, List[str]]) -> Tuple[bool, List[str]]:
     """
     Validates that all columns in the SQL query exist in schema tables, CTEs, or as aliases.
     
     Args:
         sql (str): The SQL query to validate.
-        schema_tables (dict): Dictionary of table names to their column lists.
+        schema (str): The database schema description.
         cte_columns (dict): Dictionary of CTE names to their column lists.
     
     Returns:
@@ -158,71 +172,105 @@ def validate_columns(sql, schema_tables, cte_columns):
     """
     errors = []
     
-    # Normalize SQL for consistent parsing
-    sql = sql.strip()
+    # Parse schema to get table-column mappings
+    schema_tables = {}
+    current_table = None
+    for line in schema.split('\n'):
+        if line.startswith('Table: '):
+            current_table = line.replace('Table: ', '').strip()
+            schema_tables[current_table] = []
+        elif line.startswith('- ') and current_table and '(' in line:
+            col_name = line.split('(')[0].replace('- ', '').strip()
+            schema_tables[current_table].append(col_name)
     
-    # Split SQL into clauses based on major SQL keywords
-    clauses = re.split(r'\b(FROM|WHERE|GROUP BY|HAVING|ORDER BY|LIMIT)\b', sql, flags=re.IGNORECASE)
-    current_tables = set()  # Track tables/CTEs referenced in FROM/JOIN
+    # Get table aliases, CTE aliases, and SELECT aliases
+    aliases = extract_table_aliases(sql)
+    cte_aliases = extract_cte_aliases(sql)
+    select_aliases = extract_select_aliases(sql)
+    
+    # Track tables/CTEs referenced in FROM/JOIN
+    current_tables = set(aliases.values()) | cte_aliases
+    alias_names = set(aliases.keys())  # e.g., {'s', 'p'}
+    
+    # Extract literals from LIKE patterns
+    literals = set()
+    like_pattern = r"LIKE\s*['\"]([^'\"]*?)['\"]"
+    for match in re.finditer(like_pattern, sql, re.IGNORECASE):
+        literal = match.group(1).lower()
+        # Split multi-word literals (e.g., 'tesla model s') into individual words
+        words = re.findall(r'\w+', literal)
+        literals.update(words)
+    
+    logger.info(f"Table aliases: {aliases}")
+    logger.info(f"CTE aliases: {cte_aliases}")
+    logger.info(f"SELECT aliases: {select_aliases}")
+    logger.info(f"Extracted literals: {literals}")
+    
+    # Mask quoted strings to avoid matching literals as columns
+    masked_sql = re.sub(r"'[^']*'", "QUOTED_STRING", sql)
+    
+    # Split SQL into clauses
+    clauses = re.split(r'\b(FROM|WHERE|GROUP BY|HAVING|ORDER BY|LIMIT)\b', masked_sql, flags=re.IGNORECASE)
     
     for i in range(0, len(clauses), 2):
         clause_content = clauses[i].strip()
         clause_type = clauses[i + 1].upper() if i + 1 < len(clauses) else None
         
-        # Handle FROM clauses separately
+        # Skip FROM clause for column validation
         if clause_type == 'FROM':
-            # Extract table/CTE names from FROM and JOIN clauses
-            from_clause = clause_content
-            if i > 0:  # Include preceding SELECT clause for context
-                from_clause = clauses[i - 2].strip() + ' ' + from_clause
-            
-            # Match table/CTE names in FROM and JOIN
-            table_pattern = r'\bFROM\b\s+([^\s,]+)(?:\s+AS\s+\w+)?|\bJOIN\b\s+([^\s,]+)(?:\s+AS\s+\w+)?'
-            for match in re.finditer(table_pattern, from_clause, re.IGNORECASE):
-                table_name = match.group(1) or match.group(2)
-                if table_name and (table_name in schema_tables or table_name in cte_columns):
-                    current_tables.add(table_name)
-                else:
-                    errors.append(f"Table or CTE {table_name} not found in schema or CTEs")
-            continue  # Skip column validation for FROM clauses
+            continue
         
         # Process non-FROM clauses (SELECT, WHERE, GROUP BY, etc.)
         if clause_content:
-            # Extract columns, excluding function calls and qualified names without table
-            column_pattern = r'\b(?:(\w+)\.)?(\w+)\b(?!\s*\()'
+            # Match potential column references, excluding function calls and numerics
+            column_pattern = r'\b(?:(\w+)\.)?([a-zA-Z_]\w*)\b(?!\s*\()'
             for match in re.finditer(column_pattern, clause_content):
                 table_prefix, column = match.group(1), match.group(2)
                 
-                # Skip if column is a reserved keyword or part of a CTE name
-                if column in cte_columns or column in schema_tables:
+                # Skip SQL keywords, CTE names, table names, table aliases, SELECT aliases, literals, and QUOTED_STRING
+                if (column.upper() in SQL_KEYWORDS or 
+                    column in cte_aliases or 
+                    column in schema_tables or 
+                    column in alias_names or
+                    column in select_aliases or
+                    column.lower() in literals or
+                    column == 'QUOTED_STRING'):
+                    logger.debug(f"Skipping token {column} (keyword, alias, literal, or quoted string)")
                     continue
                 
-                # Check if column is valid
+                # Validate column
                 found = False
                 if table_prefix:
-                    # Qualified column (e.g., s.customer_id)
-                    if table_prefix in schema_tables and column in schema_tables[table_prefix]:
-                        found = True
-                    elif table_prefix in cte_columns and column in cte_columns[table_prefix]:
-                        found = True
+                    # Qualified column (e.g., s.total_amount)
+                    if table_prefix in alias_names:
+                        actual_table = aliases.get(table_prefix, table_prefix)
+                        if actual_table in schema_tables and column in schema_tables[actual_table]:
+                            found = True
+                        elif table_prefix in cte_columns and column in cte_columns[table_prefix]:
+                            found = True
+                        else:
+                            errors.append(f"Column {table_prefix}.{column} not found in table {actual_table} or CTE {table_prefix}")
                     else:
-                        errors.append(f"Column {table_prefix}.{column} not found in referenced table or CTE")
+                        errors.append(f"Table alias {table_prefix} not defined in query")
                 else:
-                    # Unqualified column (e.g., total_revenue)
-                    # Check all current tables/CTEs
+                    # Unqualified column (e.g., total_sales)
                     for table in current_tables:
                         if (table in schema_tables and column in schema_tables[table]) or \
                            (table in cte_columns and column in cte_columns[table]):
                             found = True
                             break
-                    # Check if column is an alias in the SELECT clause
-                    if not found and i == 0:  # SELECT clause
-                        alias_pattern = r'\b\w+\s+AS\s+' + re.escape(column) + r'\b'
-                        if re.search(alias_pattern, clause_content, re.IGNORECASE):
-                            found = True
+                    # Check if column is a SELECT alias (only in SELECT clause)
+                    if not found and i == 0 and column in select_aliases:
+                        found = True
                     if not found:
                         errors.append(f"Column {column} not found in any referenced table or CTE")
+                
+                logger.debug(f"Validated {table_prefix}.{column} {'successfully' if found else 'failed'}")
     
+    # Deduplicate errors
+    errors = list(set(errors))
+    
+    logger.info(f"Column validation {'succeeded' if not errors else 'failed'}: {errors}")
     return len(errors) == 0, errors
 
 def clean_sql_output(raw_sql: str) -> str:
@@ -267,7 +315,7 @@ def enforce_column_qualification(sql: str, schema: str) -> str:
     
     def replace_column(match):
         alias_or_none, col = match.group(1), match.group(2)
-        if alias_or_none:
+        if alias_or_none or col.upper() in SQL_KEYWORDS:
             return match.group(0)
         possible_tables = [t for t, cols in table_columns.items() if col in cols]
         if len(possible_tables) == 1:
@@ -392,8 +440,9 @@ def run_nl_query(nl_query: str, db_path: str = DB_PATH):
     cleaned_sql = clean_sql_output(raw_sql)
     logger.info(f"Cleaned SQL:\n{cleaned_sql}")
 
-    aliases = extract_table_aliases(cleaned_sql)
-    is_valid, validation_errors = validate_columns(cleaned_sql, schema, aliases)
+    # Validate columns using schema and CTE columns
+    cte_columns = extract_cte_columns(cleaned_sql, extract_cte_aliases(cleaned_sql))
+    is_valid, validation_errors = validate_columns(cleaned_sql, schema, cte_columns)
     if not is_valid:
         logger.error(f"SQL validation errors: {validation_errors}")
         return {

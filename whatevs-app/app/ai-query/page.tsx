@@ -1,14 +1,14 @@
-'use client'
-import { useState } from 'react'
+"use client";
+import { useState } from "react";
 
 export default function AIQueryPage() {
-  const [query, setQuery] = useState('')
-  const [response, setResponse] = useState('')
+  const [query, setQuery] = useState("");
+  const [response, setResponse] = useState("");
 
   const handleSubmit = () => {
-    setResponse(`Pretend this is the AI responding to: "${query}"`)
-    setQuery('')
-  }
+    setResponse(`Pretend this is the AI responding to: "${query}"`);
+    setQuery("");
+  };
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -19,9 +19,13 @@ export default function AIQueryPage() {
           {/* AI Response Display */}
           <div className="mockup-code bg-base-200 text-base-content min-h-[100px]">
             {response ? (
-              <pre data-prefix="AI"><code>{response}</code></pre>
+              <pre data-prefix="AI">
+                <code>{response}</code>
+              </pre>
             ) : (
-              <pre data-prefix="AI" className="text-gray-400"><code>The AI's response will appear here.</code></pre>
+              <pre data-prefix="AI" className="text-gray-400">
+                <code>The AI&apos;s response will appear here.</code>
+              </pre>
             )}
           </div>
 
@@ -29,15 +33,18 @@ export default function AIQueryPage() {
           <textarea
             className="textarea textarea-bordered mt-4 w-full"
             placeholder="Kowalski analysis!"
-            value={query} 
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
           ></textarea>
 
           <div className="card-actions justify-end mt-2">
-            <button className="btn btn-primary" onClick={handleSubmit}>Ask AI</button>
+            <button className="btn btn-primary" onClick={handleSubmit}>
+              Ask AI
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
+

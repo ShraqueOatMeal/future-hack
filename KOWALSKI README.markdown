@@ -178,6 +178,9 @@ KOWALSKI is a game-changer for FutureHack and beyond because it:
      GROUP BY region;
      ```
    - Output: Bar chart showing sales by region with a summary like "North region leads with $10,000 in sales."
+     ![WhatsApp Image 2025-07-18 at 19 08 49_be09d5b9](https://github.com/user-attachments/assets/494c7838-9368-4344-acc4-5de2fce9ea29)
+     ![WhatsApp Image 2025-07-18 at 19 08 49_52be7f38](https://github.com/user-attachments/assets/b042329a-14ac-448a-b9d7-eaff77c7f61d)
+
 
 3. Forecasting:
    - Query: "What's the sales forecast for Widget A?"

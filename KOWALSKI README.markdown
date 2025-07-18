@@ -63,7 +63,8 @@ KOWALSKI's architecture is designed for simplicity, scalability, and accuracy, b
 
 4. Query Execution and Analysis:
    - The generated SQL query is executed on the connected database or uploaded dataset.
-   - Results are processed to produce visualizations (e.g., bar charts for sales trends) and textual summaries (e.g., "Product X had the highest sales at $10,000"), adding value beyond the problem statement.
+   - Results are processed to produce visualizations and textual summaries (e.g., "Show company'd revenue trends for 2025 by region"), adding value beyond the problem statement.
+
 
 5. Forecasting and Recommendations:
    - For forecasting queries, KOWALSKI applies predictive models to historical data and real-time stock data from the TwelveData API, generating insights like "Based on current trends, Product Y is likely to see a 15% sales increase next quarter."
@@ -89,6 +90,9 @@ Example Queries:
 - "How did sales perform month-over-month in 2025?"
 - "Which regions are underperforming in Q3?"
 - "What's the forecasted stock demand for next quarter based on real-time market data?"
+  ![WhatsApp Image 2025-07-18 at 19 08 49_be09d5b9](https://github.com/user-attachments/assets/494c7838-9368-4344-acc4-5de2fce9ea29)
+  ![WhatsApp Image 2025-07-18 at 19 08 49_52be7f38](https://github.com/user-attachments/assets/b042329a-14ac-448a-b9d7-eaff77c7f61d)
+
 
 ## Limitations
 

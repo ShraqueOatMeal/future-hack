@@ -183,7 +183,7 @@ KOWALSKI is a game-changer for FutureHack and beyond because it:
 
 
 3. Forecasting:
-   - Query: "What's the sales forecast for Widget A?"
+   - Query: Show our company's revenue trends for 2025 by region?"
    - Output: Line chart predicting sales trends using TwelveData API data, with a recommendation like "Increase Widget A inventory by 10% for Q4."
 
 ## Future Enhancements

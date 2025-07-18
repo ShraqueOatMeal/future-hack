@@ -29,41 +29,38 @@ import sqlite3
 # result1 = run_nl_query("Show products and their sales in 2025")
 
 
-# # Test Query 1
-# result1 = run_nl_query("Show products with sales in 2025 where the total revenue exceeds the average revenue of all products in their category, including the total quantity sold and the percentage of total revenue for that category")
-# print("Result for Query 1:")
-# print(result1)
+ # # Test Query 1
+ # result1 = run_nl_query("Show products with sales in 2025 where the total revenue exceeds the average revenue of all products in their category, including the total quantity sold and the percentage of total revenue for that category")
+ # print("Result for Query 1:")
+ # print(result1)
 def test_direct_sql():
     conn = sqlite3.connect("company.db")
     cursor = conn.cursor()
     
     # Test Query 1: EV products revenue by region
     query1 = """
-    WITH ev_sales AS (
-      SELECT s.date, s.customer_id, s.total_amount, c.region, p.stock
-      FROM sales s
-      JOIN products p ON s.product_id = p.product_id
-      JOIN customers c ON s.customer_id = c.customer_id
-      WHERE LOWER(p.tags) LIKE '%ev%' AND s.date >= DATE('2025-01-01') AND p.stock < 100
-    ),
-    region_revenue AS (
-      SELECT region, SUM(total_amount) AS total_revenue, COUNT(DISTINCT customer_id) AS unique_customers, AVG(total_amount) AS avg_sale_amount
-      FROM ev_sales
-      GROUP BY region
-    )
-    SELECT region, total_revenue, unique_customers, avg_sale_amount
-    FROM region_revenue
-    ORDER BY total_revenue DESC
-    LIMIT 5;
+    SELECT sql FROM sqlite_master WHERE name='products_fts';
     """
-    
+    query2 = """
+    SELECT p.name, p.category, p.price
+FROM products p
+JOIN products_fts ON products_fts.rowid = p.product_id
+WHERE products_fts MATCH 'Model S*';
+    """
+    query3 = """SELECT pt.product_id, pt.tag
+FROM product_tags pt
+WHERE pt.product_id IN (122, 133) AND pt.tag = 'EV';"""
+    query4 = """SELECT sql FROM sqlite_master WHERE name='products_fts';"""
+    query5 = """SELECT rowid, name FROM products_fts LIMIT 5;"""
 
-    
+
     # Execute tests
     queries = [
-        ("EV Revenue by Region", query1),
-        # ("Products Above Category Average", query2),
-        # ("Top Customers by Frequency", query3),
+        ("Tables", query1),
+        ("full text search", query2),
+        ("bill of materials", query3),
+        # ("products_fts schema", query4),
+        # ("Sample products_fts data", query5)
         # ("Low Stock High Demand Products", query4)
     ]
     

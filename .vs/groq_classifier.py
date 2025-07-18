@@ -132,6 +132,7 @@ MODEL = "grok-3"
 #     forecast = query_groq_for_prediction(prompt)
 #     return forecast
 
+# groq_classifier.py (updated)
 def classify_intent_with_groq(user_query: str) -> str:
     print("[INFO] Classifying query intent...")
     

@@ -4,6 +4,9 @@ anything specific to a page should be in that page's component file
 */
 
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @plugin "daisyui";
 
 @media (prefers-color-scheme: dark) {
@@ -17,3 +20,4 @@ body {
   color: rgb(var(--foreground-rgb));
   padding: 1rem;
 }
+
